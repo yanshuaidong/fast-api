@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面</title>
+    <script src="./lib/vue.js"></script>
+    <link rel="stylesheet" href="./lib/element.css">
+    <link rel="stylesheet" href="./css.css">
+    <script src="./lib/element.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-aside width="200px">
+                <el-menu background-color="#545c64" class="my-aside" text-color="#fff" active-text-color="#ffd04b"
+                    default-active="0" class="el-menu-vertical-demo" @select="handleSelect">
+                    <el-menu-item v-for="(item, index) in apiList" :key="index" :index="index.toString()">
+                        {{ item.name }}
+                    </el-menu-item>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header>
+                    <div class="my-header">
+                        <el-button type="primary" @click="updateApi">添加接口</el-button>
+                        <el-input class="my-input" v-model="inputContent" placeholder="搜索"></el-input>
+                    </div>
+                </el-header>
+                <el-main>
+                    <div class="my-main" v-if="selectedApi">
+                        <el-form ref="form" :model="selectedApi" label-width="80px">
+                            <el-form-item label="接口名">
+                                <el-input v-model="selectedApi.name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="请求方式">
+                                <el-select v-model="selectedApi.method" placeholder="请选择">
+                                    <el-option label="GET" value="GET"></el-option>
+                                    <el-option label="POST" value="POST"></el-option>
+                                    <el-option label="PUT" value="PUT"></el-option>
+                                    <el-option label="DELETE" value="DELETE"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="API路径">
+                                <el-input v-model="selectedApi.apiPath"></el-input>
+                            </el-form-item>
+                            <el-form-item label="响应">
+                                <div class="my-editor">
+                                    <div class="control">
+                                        <div class="format" @click="formatCode">格式化</div>
+                                        <div class="copy" @click="copyCode">复制</div>
+                                    </div>
+                                    <div id="res-container" style="width:800px;height:400px;border:1px solid grey">
+                                    </div>
+                                </div>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button @click="updateApi" type="primary">更新接口</el-button>
+                            </el-form-item>
+                            <el-form-item label="例子">
+                                <div id="req-container" style="width:800px;height:400px;border:1px solid grey">
+                                </div>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { vs: "../node_modules/monaco-editor/min/vs" } });
+        require(["vs/editor/editor.main"], function () {
+            var resEditor = monaco.editor.create(
+                document.getElementById("res-container"),
+                {
+                    value: ["{}"].join("\n"),
+                    language: "json",
+                    theme: "vs-dark",
+                    automaticLayout: true,
+                    formatOnType: true,
+                    formatOnPaste: true,
+                    minimap: {
+                        enabled: false,
+                    },
+                    scrollBeyondLastLine: false,
+                    wordWrap: "on",
+                    wrappingIndent: "indent",
+                }
+            );
+            var reqEditor = monaco.editor.create(
+                document.getElementById("req-container"),
+                {
+                    value: ["{}"].join("\n"),
+                    language: "javascript",
+                    theme: "vs-dark",
+                    automaticLayout: true,
+                    formatOnType: true,
+                    formatOnPaste: true,
+                    minimap: {
+                        enabled: false,
+                    },
+                    scrollBeyondLastLine: false,
+                    wordWrap: "on",
+                    wrappingIndent: "indent",
+                }
+            );
+            window.resEditor = resEditor;
+            window.reqEditor = reqEditor;
+            window.initEditorContent();
+        });
+    </script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

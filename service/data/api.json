@@ -1,0 +1,17 @@
+{
+  "apis": [
+    {
+      "name": "文件预览接口",
+      "method": "GET",
+      "apiPath": "/api/v1/student/document/img-preview",
+      "resFile": "api-v1-student-document-img-preview.json"
+    },
+    {
+      "name": "文件详情接口",
+      "method": "POST",
+      "apiPath": "/api/v1/student/document/info",
+      "resFile": "api-v1-student-document-info.json"
+    }
+  ]
+}
+

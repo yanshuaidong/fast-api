@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.my-aside {
+    height: 100%;
+}
+
+.my-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+    border-bottom: 4px solid #ccc;
+}
+
+.my-input {
+    width: 300px;
+}
+
+.my-main {
+    margin-top: 40px;
+}
+
+.my-editor {}
+
+.control {
+    width: 802px;
+    display: flex;
+    justify-content: flex-end;
+    background:  rgb(84, 92, 100);
+    height: 30px;
+}
+
+.format {
+    color: #fff;
+    cursor: pointer;
+    line-height: 30px;
+}
+
+.copy {
+    color: #fff;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 40px;
+    line-height: 30px;
+}
