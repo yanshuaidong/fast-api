@@ -117,7 +117,6 @@ app.post("/set-api", (req, res) => {
         // 更改现有 API
         api.name = name;
         api.method = method;
-        api.resFile = `${apiPath.replace(/\//g, "-")}.json`;
         apiExists = true;
       }
     });
@@ -128,9 +127,9 @@ app.post("/set-api", (req, res) => {
         name,
         method,
         apiPath,
-        resFile: `${apiPath.replace(/\//g, "-")}.json`,
+        resFile: `${apiPath.replace(/^\//, '').replace(/\//g, '-') + '.json'}`,
       };
-      apiList.push(newApi);
+      jsonData.apis.push(newApi);
     }
     //  使用 writeFileSync 将 jsonData 写入filePath数据文件
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), "utf-8");
@@ -138,7 +137,7 @@ app.post("/set-api", (req, res) => {
     const resFilePath = path.join(
       __dirname,
       "data",
-      `${apiPath.replace(/\//g, "-")}.json`
+      `${apiPath.replace(/^\//, '').replace(/\//g, '-') + '.json'}`
     );
     fs.writeFileSync(resFilePath, JSON.stringify(resJson, null, 2), "utf-8");
     res.json(1);

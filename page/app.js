@@ -6,6 +6,13 @@ new Vue({
       apiList: [], // API 列表
       selectedApi: {}, // 选中的 API
       inputContent: "", // 输入框内容
+      dialogVisible: false, // 弹窗
+      newApi: {
+        name: "", //
+        method : "", //
+        apiPath : "", //
+        resJson : {}, //
+      },
     };
   },
   async mounted() {
@@ -30,9 +37,34 @@ new Vue({
       data.reqJson = this.generateFetchMethodString(data);
       return data;
     },
+    async setApiData(param) {
+      const response = await fetch('http://localhost:3001/set-api', {
+        method: 'POST',
+        body: JSON.stringify(param),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return response;
+    },
     //
-    updateApi() {
-      console.log("添加接口");
+    async updateApi() {
+      const response = await this.setApiData(this.selectedApi);
+      console.log('const response', response.json());
+      this.$message({
+        message: "完成更新",
+        type: "success",
+      });
+    },
+    async addApi(){
+      // newApi
+      const response = await this.setApiData(this.newApi);
+      console.log('const response', response.json());
+      dialogVisible = false;
+      this.$message({
+        message: "完成添加",
+        type: "success",
+      });
     },
     //初始化编辑器
     initEditorContent() {

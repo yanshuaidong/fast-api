@@ -25,7 +25,7 @@
             <el-container>
                 <el-header>
                     <div class="my-header">
-                        <el-button type="primary" @click="updateApi">添加接口</el-button>
+                        <el-button type="primary" @click="dialogVisible = true">添加接口</el-button>
                         <el-input class="my-input" v-model="inputContent" placeholder="搜索"></el-input>
                     </div>
                 </el-header>
@@ -68,6 +68,28 @@
                 </el-main>
             </el-container>
         </el-container>
+        <el-dialog title="添加接口" :visible.sync="dialogVisible" width="500px">
+            <el-form ref="form" :model="newApi" label-width="80px">
+                <el-form-item label="接口名">
+                    <el-input v-model="newApi.name"></el-input>
+                </el-form-item>
+                <el-form-item label="请求方式">
+                    <el-select v-model="newApi.method" placeholder="请选择">
+                        <el-option label="GET" value="GET"></el-option>
+                        <el-option label="POST" value="POST"></el-option>
+                        <el-option label="PUT" value="PUT"></el-option>
+                        <el-option label="DELETE" value="DELETE"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="API路径">
+                    <el-input v-model="newApi.apiPath"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addApi">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
     <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
     <script>

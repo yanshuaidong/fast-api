@@ -45,3 +45,10 @@ body {
     margin-right: 40px;
     line-height: 30px;
 }
+.new-control {
+    width: 202px;
+    display: flex;
+    justify-content: flex-end;
+    background:  rgb(84, 92, 100);
+    height: 30px;
+}
